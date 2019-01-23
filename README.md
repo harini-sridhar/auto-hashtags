@@ -17,6 +17,8 @@ The Microsoft COCO database will be used. Here are examples of the data:
 
 ![Alt text](./images/coco_eg.jpg?raw=true "Title")
 
+The captions from these data will be filtered using the nltk stopwords list, and punctuations/single-characters will be removed to create hashtag-like words for the image.
+
 ## Next Steps
 
 ![Alt text](./images/next_steps.jpg?raw=true "Title")
