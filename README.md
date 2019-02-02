@@ -33,3 +33,6 @@ These words are embedding using GloVe and are matched to categories in the Insta
 
 TBD.
 
+## Credits 
+
+The transformer model code was taken from https://github.com/ruotianluo/Transformer_Captioning.
