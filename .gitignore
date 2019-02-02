@@ -1,1 +1,9 @@
 *.DS_Store
+transformer/models/glove/glove.6B/glove.6B.100d.txt
+transformer/models/glove/glove.6B/glove.6B.100d.txt.word2vec
+transformer/models/glove/glove.6B/glove.6B.200d.txt
+transformer/models/glove/glove.6B/glove.6B.300d.txt
+transformer/models/glove/glove.6B/glove.6B.50d.txt
+transformer/models/model.pth
+transformer/model.pth
+*.pth
