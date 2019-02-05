@@ -4,11 +4,9 @@ from __future__ import print_function
 
 import json
 import numpy as np
-
 import time
 import os
 from six.moves import cPickle
-
 import opts
 import models
 from dataloader import *
@@ -20,7 +18,6 @@ import torch
 
 import streamlit as st
 from PIL import Image
-
 from captions_pred import *
 
 # Device configuration
@@ -94,13 +91,11 @@ parser.add_argument('--verbose_loss', type=int, default=0,
 parser.add_argument('--num_tags', type=int, default=30,
                 help='number of hashtags')
 
-
 opt = parser.parse_args()
 
 # Load infos
 with open(opt.infos_path, 'rb') as f:
     infos = cPickle.load(f, encoding='latin1')
-
 
 # override and collect parameters
 if len(opt.input_fc_dir) == 0:
@@ -120,9 +115,11 @@ for k in vars(infos['opt']).keys():
         if k in vars(opt):
             assert vars(opt)[k] == vars(infos['opt'])[k], k + ' option not consistent'
         else:
-            vars(opt).update({k: vars(infos['opt'])[k]}) # copy over options from model
+            # copy over options from model
+            vars(opt).update({k: vars(infos['opt'])[k]})
 
-vocab = infos['vocab'] # ix -> word mapping
+# ix -> word mapping
+vocab = infos['vocab']
 
 # Setup the model
 model = models.setup(opt)
@@ -140,7 +137,8 @@ else:
                             'coco_json': opt.coco_json,
                             'batch_size': opt.batch_size,
                             'cnn_model': opt.cnn_model})
-# When eval using provided pretrained model, the vocab may be different from what you have in your cocotalk.json
+# When eval using provided pretrained model, the vocab may be different from
+# what you have in your cocotalk.json.
 # So make sure to use the vocab in infos file.
 loader.ix_to_word = infos['vocab']
 
@@ -149,18 +147,15 @@ loader.ix_to_word = infos['vocab']
 loss, split_predictions, lang_stats = eval_utils.eval_split(model, crit, loader,
     vars(opt))
 
-#print ('preds: ', split_predictions)
-#print ('preds caption:', split_predictions[0]['caption'])
-
-#print('loss: ', loss)
 if lang_stats:
     print(lang_stats)
 
+# Extract caption
 caption = split_predictions[0]['caption'].split()
 # Remove stopWords
 caption_tags = remove_stopwords(caption)
 
-#Download glove - http://nlp.stanford.edu/data/glove.6B.zip
+# Download glove - http://nlp.stanford.edu/data/glove.6B.zip
 # Save glove file as word2vec file - only need to do this once
 from gensim.scripts.glove2word2vec import glove2word2vec
 glove_input_file = './models/glove/glove.6B/glove.6B.100d.txt'
@@ -182,28 +177,23 @@ insta_tags = list(set(get_hashtags(caption_tags, hashtag)) - banned)
 with open('./models/glove/generic_hashtags.pkl', 'rb') as f:
     generic_tags = list(set(cPickle.load(f)) - banned)
 
-
 # Choose random tags from insta_tags and generic_tags
-if len(insta_tags)<(opt.num_tags - len(caption_tags)):
+if len(insta_tags) < (opt.num_tags - len(caption_tags)):
     random_tags = insta_tags
-    random_tags.extend(random.sample(generic_tags, (opt.num_tags-len(insta_tags)-len(caption_tags))))
+    num_generic_tags = opt.num_tags - len(insta_tags) - len(caption_tags)
+    random_tags.extend(random.sample(generic_tags, num_generic_tags))
 else:
-    random_tags = random.sample(insta_tags, opt.num_tags- len(caption_tags))
+    random_tags = random.sample(insta_tags, opt.num_tags - len(caption_tags))
 
 # Display image
 image = Image.open('./images/baby.jpg')
 st.image(image)
 #st.image(image, caption=' '.join(hash_cap))
 
-# Display the caption
-#st.write('actual caption: ', caption)
-
 # Display the caption tags and the hashtags
 hash_caption_tags = ["#" + word for word in caption_tags]
 hash_instatags = ["#" + word for word in random_tags] + hash_caption_tags
 st.write(' '.join(tag for tag in hash_instatags))
-
-
 
 
 if opt.dump_json == 1:
