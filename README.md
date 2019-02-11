@@ -12,7 +12,7 @@ Hashtags play a very important role when businesses and influencers on social me
 
 The Microsoft COCO database will be used. Here are examples of the data:
 
-![Alt text](./images_for_readme/coco_eg.jpg?raw=true "Title")
+![Alt text](./images_for_readme/coco_eg.jpg?raw=true "Title")  
 
 ## Model 
 
@@ -24,19 +24,21 @@ These words are embedding using GloVe and are matched to categories in the Insta
 
 ## Demo 
 
-![Alt text](./images_for_readme/demo.png?raw=true "Title")
+![Alt text](./images_for_readme/demo.png?raw=true "Title")  
 
 ## Instructions to Run 
 
 See requirements.txt for package info. 
 1. Clone the repo.  
-2. To run the flask app, from transformer/ run:  
+2. Download [GloVe](http://nlp.stanford.edu/data/glove.6B.zip). Unzip and place in transformer/src/models/glove/.  
+3. Download pre-trained models from [here](https://drive.google.com/open?id=184tOVrh3lL5vYjl6X3SoRrP9He57XV5v). Unzip and place in transformer/src/.  
+4. To run the flask app, from transformer/ run:  
     python caption.py  
-3. Open the port specified in your terminal (http://0.0.0.0:5000/).  
-4. Upload your image.  
+5. Open the port specified in your terminal (http://0.0.0.0:5000/).  
+6. Upload your image.  
 
 
 ## Credits 
 
-Transformer model: https://github.com/ruotianluo/Transformer_Captioning.
+[Transformer model](https://github.com/ruotianluo/Transformer_Captioning)
 
