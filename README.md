@@ -28,7 +28,13 @@ These words are embedding using GloVe and are matched to categories in the Insta
 
 ## Instructions to Run 
 
-TBD.
+See requirements.txt for package info. 
+1. Clone the repo.  
+2. To run the flask app, from transformer/ run:  
+    python caption.py  
+3. Open the port specified in your terminal (http://0.0.0.0:5000/).  
+4. Upload your image.  
+
 
 ## Credits 
 
