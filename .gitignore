@@ -7,3 +7,7 @@ transformer/models/glove/glove.6B/glove.6B.50d.txt
 transformer/models/model.pth
 transformer/model.pth
 *.pth
+transformer/src/models/glove/glove.6B/glove.6B.100d.txt
+transformer/src/models/glove/glove.6B/glove.6B.100d.txt.word2vec
+*.pyc
+.ipynb_checkpoints/bigram-checkpoint.ipynb
